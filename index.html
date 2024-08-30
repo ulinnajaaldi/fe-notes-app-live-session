@@ -9,8 +9,17 @@
             <text-title text="Notes App Cantik"></text-title>
             <notes-form></notes-form>
         </header>
-        <main class="container flex items-center justify-center">
+        <main class="container">
             <notes-list></notes-list>
+            <section class="space-y-3">
+                <div class="grid grid-cols-12 items-center">
+                    <h1 class="col-span-2 font-semibold text-2xl">
+                        Archive Note
+                    </h1>
+                    <div class="h-[2px] col-span-10 bg-slate-800"></div>
+                </div>
+                <notes-list-archive></notes-list-archive>
+            </section>
         </main>
     </body>
 </html>

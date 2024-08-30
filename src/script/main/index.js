@@ -1,51 +1,70 @@
-const main = () => {
-    const blogs = [
-        {
-            id: 1,
-            title: 'Cara Memulai Belajar Pemrograman',
-            body: 'Panduan untuk pemula yang ingin memulai belajar pemrograman.',
-        },
-        {
-            id: 2,
-            title: 'Tips Efektif dalam Pengembangan Web',
-            body: 'Tips dan trik untuk menjadi pengembang web yang lebih baik.',
-        },
-        {
-            id: 3,
-            title: 'Mengenal Konsep Web Component',
-            body: 'Pengenalan singkat tentang Web Component dan komponen-komponennya.',
-        },
-        {
-            id: 4,
-            title: 'Mengenal Konsep React.js',
-            body: 'Pengenalan singkat tentang React.js dan komponen-komponennya.',
-        },
-        {
-            id: 5,
-            title: 'Panduan Penggunaan Vue.js',
-            body: 'Pengenalan singkat tentang Vue.js dan komponen-komponennya.',
-        },
-        {
-            id: 6,
-            title: 'Belajar Bahasa Pemrograman Python',
-            body: 'Cara mudah memulai belajar bahasa pemrograman Python.',
-        },
-    ]
+import toastify from 'toastify-js'
 
-    const notesListElement = document.querySelector('notes-list')
-    notesListElement.setNotesList(blogs)
+const main = () => {
+    const BASE_URL = 'https://notes-api.dicoding.dev/v2'
+
+    const getActiveNotes = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/notes`)
+            const results = await response.json()
+            const notesListElement = document.querySelector('notes-list')
+            notesListElement.setNotesList(results.data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+        }
+    }
+
+    const getArchiveNotes = async () => {
+        try {
+            const response = await fetch(`${BASE_URL}/notes/archived`)
+            const results = await response.json()
+            const notesListArchiveElement =
+                document.querySelector('notes-list-archive')
+            notesListArchiveElement.setNotesList(results.data)
+        } catch (error) {
+            console.log(error)
+        } finally {
+        }
+    }
+
+    getActiveNotes()
+    getArchiveNotes()
 
     const FormElement = document.querySelector('#form-notes')
     const TitleElement = document.querySelector('#form-title')
     const ContentElement = document.querySelector('#form-content')
 
-    FormElement.addEventListener('submit', (e) => {
+    FormElement.addEventListener('submit', async (e) => {
         e.preventDefault()
+        try {
+            const response = await fetch(`${BASE_URL}/notes`, {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: `${TitleElement.value}`,
+                    body: `${ContentElement.value}`,
+                }),
+            })
 
-        console.log({
-            title: TitleElement.value,
-            body: ContentElement.value,
-        })
+            const results = await response.json()
+            toastify({
+                text: results.message,
+
+                duration: 3000,
+            }).showToast()
+        } catch (error) {
+            toastify({
+                text: error.message,
+
+                duration: 3000,
+            }).showToast()
+        } finally {
+            window.location.reload()
+        }
     })
 
     const customValidationTitleHandler = (event) => {

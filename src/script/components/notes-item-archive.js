@@ -1,6 +1,6 @@
 import toastify from 'toastify-js'
 
-class NotesItem extends HTMLElement {
+class NotesItemArchive extends HTMLElement {
     constructor() {
         super()
 
@@ -30,17 +30,17 @@ class NotesItem extends HTMLElement {
                     <p class="text-base leading-6">${this._note.body}</p>
                     <div class="mt-2 flex justify-end gap-1">
                         <button
-                            id="archive"
+                        id="unarchive"
                             class="bg-blue-600 rounded-md hover:bg-blue-500 p-2 transition-all duration-300"
                         >
                             <img
-                                src='archive.svg'
-                                alt='archive-icon'
+                                src='unarchive.svg'
+                                alt='unarchive-icon'
                                 class="size-4 text-white"
                             />
                         </button>
                         <button
-                            id="delete"
+                        id="delete"
                             class="bg-red-600 rounded-md hover:bg-red-500 p-2 transition-all duration-300"
                         >
                             <img
@@ -52,10 +52,11 @@ class NotesItem extends HTMLElement {
                     </div>
                 </div>
           `
-        this.querySelector('#archive').addEventListener('click', async () => {
+
+        this.querySelector('#unarchive').addEventListener('click', async () => {
             try {
                 const response = await fetch(
-                    `https://notes-api.dicoding.dev/v2/notes/${this._note.id}/archive`,
+                    `https://notes-api.dicoding.dev/v2/notes/${this._note.id}/unarchive`,
                     {
                         method: 'POST',
                     }
@@ -102,4 +103,4 @@ class NotesItem extends HTMLElement {
     }
 }
 
-customElements.define('notes-item', NotesItem)
+customElements.define('notes-item-archive', NotesItemArchive)
