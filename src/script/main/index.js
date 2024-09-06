@@ -2,34 +2,35 @@ import toastify from 'toastify-js'
 
 const main = () => {
     const BASE_URL = 'https://notes-api.dicoding.dev/v2'
+    const loaderElement = document.querySelectorAll('#loader_wrapper')
 
     const getActiveNotes = async () => {
+        for (let i = 0; i < loaderElement.length; i++) {
+            loaderElement[i].classList.remove('hidden')
+        }
         try {
             const response = await fetch(`${BASE_URL}/notes`)
             const results = await response.json()
+            const responseArchive = await fetch(`${BASE_URL}/notes/archived`)
+            const resultsArchive = await responseArchive.json()
+
+            const notesListArchiveElement =
+                document.querySelector('notes-list-archive')
+            notesListArchiveElement.setNotesList(resultsArchive.data)
+
             const notesListElement = document.querySelector('notes-list')
             notesListElement.setNotesList(results.data)
         } catch (error) {
             console.log(error)
         } finally {
-        }
-    }
-
-    const getArchiveNotes = async () => {
-        try {
-            const response = await fetch(`${BASE_URL}/notes/archived`)
-            const results = await response.json()
-            const notesListArchiveElement =
-                document.querySelector('notes-list-archive')
-            notesListArchiveElement.setNotesList(results.data)
-        } catch (error) {
-            console.log(error)
-        } finally {
+            for (let i = 0; i < loaderElement.length; i++) {
+                loaderElement[i].classList.add('hidden')
+                loaderElement[i].classList.add('flex')
+            }
         }
     }
 
     getActiveNotes()
-    getArchiveNotes()
 
     const FormElement = document.querySelector('#form-notes')
     const TitleElement = document.querySelector('#form-title')

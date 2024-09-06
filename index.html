@@ -10,6 +10,9 @@
             <notes-form></notes-form>
         </header>
         <main class="container">
+            <div id="loader_wrapper" class="flex items-center justify-center">
+                <div class="loader"></div>
+            </div>
             <notes-list></notes-list>
             <section class="space-y-3">
                 <div class="grid grid-cols-12 items-center">
@@ -17,6 +20,12 @@
                         Archive Note
                     </h1>
                     <div class="h-[2px] col-span-10 bg-slate-800"></div>
+                </div>
+                <div
+                    id="loader_wrapper"
+                    class="flex items-center justify-center"
+                >
+                    <div class="loader"></div>
                 </div>
                 <notes-list-archive></notes-list-archive>
             </section>

@@ -73,6 +73,10 @@ class NotesItemArchive extends HTMLElement {
 
                     duration: 3000,
                 }).showToast()
+            } finally {
+                setTimeout(() => {
+                    window.location.reload()
+                }, [3000])
             }
             return
         })
@@ -97,6 +101,10 @@ class NotesItemArchive extends HTMLElement {
 
                     duration: 3000,
                 }).showToast()
+            } finally {
+                setTimeout(() => {
+                    window.location.reload()
+                }, [3000])
             }
             return
         })

@@ -72,6 +72,10 @@ class NotesItem extends HTMLElement {
 
                     duration: 3000,
                 }).showToast()
+            } finally {
+                setTimeout(() => {
+                    window.location.reload()
+                }, [3000])
             }
             return
         })
@@ -85,6 +89,7 @@ class NotesItem extends HTMLElement {
                     }
                 )
                 const results = await response.json()
+
                 toastify({
                     text: results.message,
 
@@ -96,6 +101,10 @@ class NotesItem extends HTMLElement {
 
                     duration: 3000,
                 }).showToast()
+            } finally {
+                setTimeout(() => {
+                    window.top.location.reload()
+                }, [3000])
             }
             return
         })
